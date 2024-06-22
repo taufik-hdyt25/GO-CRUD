@@ -1,10 +1,34 @@
 package models
 
+import (
+	"mime/multipart"
+
+	"github.com/lib/pq"
+)
+
 type Food struct {
-	Id        int64    `gorm:"primaryKey" json:"id"`
-	Name      string   `gorm:"type:varchar(300)" json:"name"`
-	Deskripsi string   `gorm:"type:text" json:"deskripsi"`
-	Bahan     []string `gorm:"type:text[]" json:"bahan"`
-	Step      []string `gorm:"type:text[]" json:"step"`
-	Image     string   `gorm:"type:varchar(300)" json:"image"`
+	ID          uint           `gorm:"primaryKey" json:"id"`
+	Name        string         `json:"name"`
+	Description string         `json:"description"`
+	Image       string         `json:"image"`
+	CategoryID  uint           `json:"category_id"`
+	Steps       pq.StringArray `gorm:"type:text[]" json:"steps"`
+	Ingredients pq.StringArray `gorm:"type:text[]" json:"ingredients"`
+}
+type CreateRecipeInput struct {
+	Name        string                `form:"name" binding:"required"`
+	Description string                `form:"description" binding:"required"`
+	Image       *multipart.FileHeader `form:"image" binding:"required"`
+	Ingredients string                `form:"ingredients[]" binding:"required"`
+	Steps       string                `form:"steps[]" binding:"required"`
+	CategoryID  uint                  `form:"category_id" binding:"required"`
+}
+
+type Foods struct {
+	Name        string         `json:"name"`
+	Description string         `json:"description"`
+	Image       string         `json:"image"`
+	Ingredients pq.StringArray `gorm:"type:text[]" json:"ingredients"`
+	Steps       pq.StringArray `gorm:"type:text[]" json:"steps"`
+	CategoryID  uint           `json:"category_id"`
 }

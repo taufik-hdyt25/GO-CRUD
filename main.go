@@ -12,6 +12,7 @@ func main() {
 
 	r.GET("/api/foods", foodcontroller.GetAll)
 	r.GET("/api/food/:id", foodcontroller.GetOne)
+	r.POST("/api/food", foodcontroller.CreateRecipe)
 
 	r.Run()
 }
