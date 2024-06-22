@@ -33,8 +33,8 @@ func GetAll(c *gin.Context) {
 	// Query to count total items
 	models.DB.Model(&models.Food{}).Count(&totalItems)
 
-	// Query to get paginated results
-	models.DB.Limit(pageSize).Offset(offset).Find(&foods)
+	// Query to get paginated results with category preload
+	models.DB.Preload("Category").Limit(pageSize).Offset(offset).Find(&foods)
 
 	// Prepare response with pagination metadata
 	response := gin.H{
@@ -49,7 +49,6 @@ func GetAll(c *gin.Context) {
 
 	c.JSON(http.StatusOK, response)
 }
-
 func GetOne(c *gin.Context) {
 	var food models.Food
 	id := c.Param("id")

@@ -14,6 +14,7 @@ type Food struct {
 	CategoryID  uint           `json:"category_id"`
 	Steps       pq.StringArray `gorm:"type:text[]" json:"steps"`
 	Ingredients pq.StringArray `gorm:"type:text[]" json:"ingredients"`
+	Category    Category       `json:"category"`
 }
 type CreateRecipeInput struct {
 	Name        string                `form:"name" binding:"required"`
